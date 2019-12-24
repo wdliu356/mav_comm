@@ -16,37 +16,30 @@
  * limitations under the License.
  */
 
-#ifndef PLANNING_MSGS_CONVERSIONS_H
-#define PLANNING_MSGS_CONVERSIONS_H
+#ifndef MAV_PLANNING_MSGS_CONVERSIONS_DEPRECATED_H
+#define MAV_PLANNING_MSGS_CONVERSIONS_DEPRECATED_H
 
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Vector3.h>
 
-#include "planning_msgs/PolynomialSegment4D.h"
-#include "planning_msgs/PolynomialTrajectory4D.h"
-#include "planning_msgs/eigen_planning_msgs.h"
+#include "mav_planning_msgs/PolynomialSegment4D.h"
+#include "mav_planning_msgs/PolynomialTrajectory4D.h"
+#include "mav_planning_msgs/eigen_planning_msgs.h"
 
-namespace planning_msgs {
-
+namespace mav_planning_msgs {
+  
 /// Converts a PolynomialSegment double array to an Eigen::VectorXd.
 inline void vectorFromMsgArray(const PolynomialSegment4D::_x_type& array,
-                               Eigen::VectorXd* x) {
-  *x = Eigen::Map<const Eigen::VectorXd>(&(array[0]), array.size());
-}
+                               Eigen::VectorXd* x);
 
 /// Converts an Eigen::VectorXd to a PolynomialSegment double array.
 inline void msgArrayFromVector(const Eigen::VectorXd& x,
-                               PolynomialSegment4D::_x_type* array) {
-  array->resize(x.size());
-  Eigen::Map<Eigen::VectorXd> map =
-      Eigen::Map<Eigen::VectorXd>(&((*array)[0]), array->size());
-  map = x;
-}
+                               PolynomialSegment4D::_x_type* array);
 
 /// Converts a PolynomialSegment message to an EigenPolynomialSegment structure.
-inline void eigenPolynomialSegmentFromMsg(
-    const PolynomialSegment4D& msg, EigenPolynomialSegment* segment) {
+inline void eigenPolynomialSegmentFromMsg(const PolynomialSegment4D& msg,
+                                          EigenPolynomialSegment* segment) {
   assert(segment != NULL);
 
   vectorFromMsgArray(msg.x, &(segment->x));
@@ -74,10 +67,11 @@ inline void eigenPolynomialTrajectoryFromMsg(
   }
 }
 
+
 /// Converts an EigenPolynomialSegment to a PolynomialSegment message. Does NOT
 /// set the header!
-inline void polynomialSegmentMsgFromEigen(
-    const EigenPolynomialSegment& segment, PolynomialSegment4D* msg) {
+inline void polynomialSegmentMsgFromEigen(const EigenPolynomialSegment& segment,
+                                          PolynomialSegment4D* msg) {
   assert(msg != NULL);
   msgArrayFromVector(segment.x, &(msg->x));
   msgArrayFromVector(segment.y, &(msg->y));
@@ -102,6 +96,7 @@ inline void polynomialTrajectoryMsgFromEigen(
     msg->segments.push_back(segment);
   }
 }
-}
 
-#endif
+}  // namespace mav_planning_msgs
+
+#endif // MAV_PLANNING_MSGS_CONVERSIONS_DEPRECATED_H
