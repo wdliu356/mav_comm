@@ -1,6 +1,12 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package mav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+3.3.3 (2020-02-09)
+------------------
+* Add the RollPitchYawrateThrustCrazyflie message to control the Crazyflie by using the joystick
+* Contributors: Giuseppe Silano
+
 3.3.2 (2018-08-22)
 ------------------
 * Fix indigo eigen3 compatibility.

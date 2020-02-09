@@ -23,6 +23,7 @@ add_message_files(
   AttitudeThrust.msg
   RateThrust.msg
   RollPitchYawrateThrust.msg
+  RollPitchYawrateThrustCrazyflie.msg
   TorqueThrust.msg
   Status.msg
   FilteredSensorData.msg
