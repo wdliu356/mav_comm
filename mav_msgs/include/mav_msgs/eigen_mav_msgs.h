@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Giuseppe Silano, University of Sannio in Benevento, Italy
  * Copyright 2015 Fadri Furrer, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Michael Burri, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
@@ -28,7 +29,7 @@
 #include "mav_msgs/common.h"
 
 namespace mav_msgs {
-  
+
 /// Actuated degrees of freedom.
 enum MavActuation { DOF4 = 4, DOF6 = 6 };
 
@@ -99,6 +100,20 @@ struct EigenRollPitchYawrateThrust {
   double pitch;
   double yaw_rate;
   Eigen::Vector3d thrust;
+};
+
+struct EigenRollPitchYawrateThrustCrazyflie {
+  EigenRollPitchYawrateThrustCrazyflie()
+      : roll(0.0), pitch(0.0), yaw_rate(0.0), thrust(0.0) {}
+
+  EigenRollPitchYawrateThrustCrazyflie(double _roll, double _pitch, double _yaw_rate,
+                              double _thrust)
+      : roll(_roll), pitch(_pitch), yaw_rate(_yaw_rate), thrust(_thrust) {}
+
+  double roll;
+  double pitch;
+  double yaw_rate;
+  double thrust;
 };
 
 /**
@@ -343,6 +358,7 @@ MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenActuators)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRateThrust)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenTrajectoryPoint)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRollPitchYawrateThrust)
+MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRollPitchYawrateThrustCrazyflie)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenOdometry)
 }
 

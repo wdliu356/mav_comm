@@ -1,11 +1,17 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package mav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+3.3.3 (2020-02-09)
+------------------
+* Add the RollPitchYawrateThrustCrazyflie message to control the Crazyflie by using the joystick
+* Contributors: Giuseppe Silano
+
 3.3.3 (2019-08-16)
 ------------------
 * Add `degrees_of_freedom` to EigenTrajectoryPoint for 6DOF compatibility.
 * Add functions to common.h:
-*   skewMatrixFromVector, vectorFromSkewMatrix, isRotationMatrix, 
+*   skewMatrixFromVector, vectorFromSkewMatrix, isRotationMatrix,
 *   matrixFromRotationVector, vectorFromRotationMatrix, omegaFromRotationVector
 *   omegaDotFromRotationVector
 

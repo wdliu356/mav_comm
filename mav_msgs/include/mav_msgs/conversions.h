@@ -1,4 +1,5 @@
 /*
+ * Copyright 2020 Giuseppe Silano, University of Sannio in Benevento, Italy
  * Copyright 2015 Fadri Furrer, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Michael Burri, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
@@ -36,6 +37,7 @@
 #include "mav_msgs/AttitudeThrust.h"
 #include "mav_msgs/RateThrust.h"
 #include "mav_msgs/RollPitchYawrateThrust.h"
+#include "mav_msgs/RollPitchYawrateThrustCrazyflie.h"
 #include "mav_msgs/TorqueThrust.h"
 #include "mav_msgs/common.h"
 #include "mav_msgs/default_values.h"
@@ -100,6 +102,17 @@ inline void eigenRollPitchYawrateThrustFromMsg(
   roll_pitch_yawrate_thrust->pitch = msg.pitch;
   roll_pitch_yawrate_thrust->yaw_rate = msg.yaw_rate;
   roll_pitch_yawrate_thrust->thrust = vector3FromMsg(msg.thrust);
+}
+
+inline void eigenRollPitchYawrateThrustCrazyflieFromMsg(
+    const RollPitchYawrateThrustCrazyflie& msg,
+    EigenRollPitchYawrateThrustCrazyflie* roll_pitch_yawrate_thrust) {
+  assert(roll_pitch_yawrate_thrust != NULL);
+
+  roll_pitch_yawrate_thrust->roll = msg.roll;
+  roll_pitch_yawrate_thrust->pitch = msg.pitch;
+  roll_pitch_yawrate_thrust->yaw_rate = msg.yaw_rate;
+  roll_pitch_yawrate_thrust->thrust = msg.thrust;
 }
 
 inline void eigenOdometryFromMsg(const nav_msgs::Odometry& msg,
@@ -440,6 +453,16 @@ inline void msgRollPitchYawrateThrustFromEigen(
   msg->pitch = roll_pitch_yawrate_thrust.pitch;
   msg->yaw_rate = roll_pitch_yawrate_thrust.yaw_rate;
   vectorEigenToMsg(roll_pitch_yawrate_thrust.thrust, &msg->thrust);
+}
+
+inline void msgRollPitchYawrateThrustCrazyflieFromEigen(
+    const EigenRollPitchYawrateThrustCrazyflie& roll_pitch_yawrate_thrust,
+    RollPitchYawrateThrustCrazyflie* msg) {
+  assert(msg != NULL);
+  msg->roll = roll_pitch_yawrate_thrust.roll;
+  msg->pitch = roll_pitch_yawrate_thrust.pitch;
+  msg->yaw_rate = roll_pitch_yawrate_thrust.yaw_rate;
+  msg->thrust = roll_pitch_yawrate_thrust.thrust;
 }
 
 inline void msgOdometryFromEigen(const EigenOdometry& odometry,
