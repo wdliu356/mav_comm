@@ -17,5 +17,5 @@ float64 roll                   # Roll angle [rad]
 float64 pitch                  # Pitch angle  [rad]
 float64 yaw_rate               # Yaw rate around z-axis [rad/s]
 
-float64 thrust                 # Thrust [rad/s] expressed in the body frame.
+float64 thrust                 # Thrust [PWM] expressed in the body frame.
                                # For a multi-rotor, usually the z-component is used.
