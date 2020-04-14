@@ -1,6 +1,13 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package mav_planning_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+3.3.5 (2020-04-14)
+------------------
+
+3.3.4 (2020-02-09)
+------------------
+
 3.3.3 (2019-08-16)
 ------------------
 * Add PolynomialSegment/Trajectory messages with 3D rotation vector.
