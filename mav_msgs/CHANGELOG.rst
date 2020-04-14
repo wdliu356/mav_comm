@@ -2,6 +2,11 @@
 Changelog for package mav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.3.4 (2020-04-14)
+------------------
+* Add drone status message
+* Contributors: Ria Sonecha, Giuseppe Silano
+
 3.3.3 (2020-02-09)
 ------------------
 * Add the RollPitchYawrateThrustCrazyflie message to control the Crazyflie by using the joystick
