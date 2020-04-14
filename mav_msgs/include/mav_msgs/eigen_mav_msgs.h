@@ -4,6 +4,8 @@
  * Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Helen Oleynikova, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Mina Kamel, ASL, ETH Zurich, Switzerland
+ * Copyright 2020 Ria Sonecha, MIT, USA
+ * Copyright 2020 Giuseppe Silano, University of Sannio in Benevento, Italy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +26,7 @@
 #include <deque>
 #include <Eigen/Eigen>
 #include <iostream>
+#include <time.h>
 
 #include "mav_msgs/common.h"
 
@@ -97,6 +100,21 @@ struct EigenRollPitchYawrateThrust {
   double yaw_rate;
   Eigen::Vector3d thrust;
 };
+
+struct EigenRollPitchYawrateThrustCrazyflie {
+  EigenRollPitchYawrateThrustCrazyflie()
+      : roll(0.0), pitch(0.0), yaw_rate(0.0), thrust(0.0) {}
+
+  EigenRollPitchYawrateThrustCrazyflie(double _roll, double _pitch, double _yaw_rate,
+                              double _thrust)
+      : roll(_roll), pitch(_pitch), yaw_rate(_yaw_rate), thrust(_thrust) {}
+
+  double roll;
+  double pitch;
+  double yaw_rate;
+  double thrust;
+};
+
 
 /**
  * \brief Container holding the state of a MAV: position, velocity, attitude and
@@ -259,6 +277,41 @@ struct EigenOdometry {
   }
 };
 
+struct EigenDroneState {
+  EigenDroneState()
+      : timestamp_ns(ros::Time::now()),
+        position_W(Eigen::Vector3f::Zero()),
+        orientation_W_B(Eigen::Quaterniond::Identity()),
+        velocity(Eigen::Vector3f::Zero()),
+        acceleration(Eigen::Vector3f::Zero()),
+        angular_velocity_B(Eigen::Vector3f::Zero()),
+        angular_acceleration_B(Eigen::Vector3f::Zero()) {}
+
+  EigenDroneState(const Eigen::Vector3f& _position,
+                  const Eigen::Quaterniond& _orientation,
+                  const Eigen::Vector3f& _velocity,
+                  const Eigen::Vector3f& _acceleration,
+                  const Eigen::Vector3f& _angular_velocity_body,
+                  const Eigen::Vector3f& _angular_acceleration_body)
+      : position_W(_position),
+        orientation_W_B(_orientation),
+        velocity(_velocity),
+        acceleration(_acceleration),
+        angular_velocity_B(_angular_velocity_body),
+        angular_acceleration_B(_angular_acceleration_body) {}
+
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  ros::Time
+      timestamp_ns;  // Time since epoch, negative value = invalid timestamp.
+  Eigen::Vector3f position_W;
+  Eigen::Quaterniond orientation_W_B;
+  Eigen::Vector3f velocity;
+  Eigen::Vector3f acceleration;
+  Eigen::Vector3f angular_velocity_B;
+  Eigen::Vector3f angular_acceleration_B;
+
+};
+
 // TODO(helenol): replaced with aligned allocator headers from Simon.
 #define MAV_MSGS_CONCATENATE(x, y) x##y
 #define MAV_MSGS_CONCATENATE2(x, y) MAV_MSGS_CONCATENATE(x, y)
@@ -273,7 +326,9 @@ MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenActuators)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRateThrust)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenTrajectoryPoint)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRollPitchYawrateThrust)
+MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenRollPitchYawrateThrustCrazyflie)
 MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenOdometry)
+MAV_MSGS_MAKE_ALIGNED_CONTAINERS(EigenDroneState)
 }
 
 #endif  // MAV_MSGS_EIGEN_MAV_MSGS_H

@@ -15,10 +15,12 @@ add_message_files(
   AttitudeThrust.msg
   RateThrust.msg
   RollPitchYawrateThrust.msg
+  RollPitchYawrateThrustCrazyflie.msg
   TorqueThrust.msg
   Status.msg
   FilteredSensorData.msg
   GpsWaypoint.msg
+  DroneState.msg
 )
 
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)

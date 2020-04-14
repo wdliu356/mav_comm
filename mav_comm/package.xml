@@ -1,9 +1,9 @@
 <package>
   <name>mav_comm</name>
-  <version>3.2.0</version>
+  <version>3.1.2</version>
   <description>Contains messages and services for MAV communication</description>
 
-  <maintainer email="fadri.furrer@mavt.ethz.ch">Fadri Furrer</maintainer>
+  <maintainer email="giuseppe.silano@unisannio.it">Giuseppe Silano</maintainer>
 
   <author>Simon Lynen</author>
   <author>Markus Achtelik</author>
@@ -13,11 +13,13 @@
   <author>Fadri Furrer</author>
   <author>Helen Oleynikova</author>
   <author>Mina Kamel</author>
+  <author>Ria Sonecha</author>
+  <author>Giuseppe Silano</author>
 
   <license>ASL 2.0</license>
 
-  <url type="website">https://github.com/ethz-asl/mav_comm</url>
-  <url type="bugtracker">https://github.com/ethz-asl/mav_comm/issues</url>
+  <url type="website">https://github.com/gsilano/mav_comm</url>
+  <url type="bugtracker">https://github.com/gsilano/mav_comm/issues</url>
 
   <!-- Dependencies which this package needs to build itself. -->
   <buildtool_depend>catkin</buildtool_depend>

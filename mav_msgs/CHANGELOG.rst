@@ -1,6 +1,17 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package mav_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+3.1.2 (2020-04-14)
+------------------
+* Add drone status message
+* Contributors: Ria Sonecha, Giuseppe Silano
+
+3.1.1 (2020-02-09)
+------------------
+* Add the RollPitchYawrateThrustCrazyflie message to control the Crazyflie by using the joystick
+* Contributors: Giuseppe Silano
+
 3.1.0 (2016-12-01)
 ------------------
 * Add getEulerAngles method to EigenOdometry message.
