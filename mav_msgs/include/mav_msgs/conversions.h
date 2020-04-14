@@ -5,6 +5,8 @@
  * Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Helen Oleynikova, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Mina Kamel, ASL, ETH Zurich, Switzerland
+ * Copyright 2020 Ria Sonecha, MIT, USA
+ * Copyright 2020 Giuseppe Silano, University of Sannio in Benevento, Italy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +36,7 @@
 #include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #include "mav_msgs/Actuators.h"
+#include "mav_msgs/DroneState.h"
 #include "mav_msgs/AttitudeThrust.h"
 #include "mav_msgs/RateThrust.h"
 #include "mav_msgs/RollPitchYawrateThrust.h"
@@ -42,6 +45,8 @@
 #include "mav_msgs/common.h"
 #include "mav_msgs/default_values.h"
 #include "mav_msgs/eigen_mav_msgs.h"
+
+#include <Eigen/Geometry>
 
 namespace mav_msgs {
 
@@ -377,6 +382,65 @@ inline void eigenTrajectoryPointFromMsg(
   trajectory_point->jerk_W.setZero();
   trajectory_point->snap_W.setZero();
 }
+
+inline void eigenDroneStateFromMsg(
+    const mav_msgs::DroneState& msg,
+    EigenDroneState* trajectory_drone_state_point) {
+  assert(trajectory_drone_state_point != NULL);
+
+  if (msg.position.z < 0) {
+    ROS_ERROR("DroneState message is empty.");
+    return;
+  }
+
+  trajectory_drone_state_point->position_W = Eigen::Vector3f(msg.position.x, msg.position.y, msg.position.z);
+  trajectory_drone_state_point->orientation_W_B = Eigen::Quaterniond(msg.orientation.w, msg.orientation.x, msg.orientation.y, msg.orientation.z);
+
+  trajectory_drone_state_point->velocity = Eigen::Vector3f(msg.linear_velocity.x, msg.linear_velocity.y, msg.linear_velocity.z);
+  trajectory_drone_state_point->acceleration = Eigen::Vector3f(msg.linear_acceleration.x, msg.linear_acceleration.y, msg.linear_acceleration.z);
+
+  trajectory_drone_state_point->angular_velocity_B = Eigen::Vector3f(msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z);
+  trajectory_drone_state_point->angular_acceleration_B = Eigen::Vector3f(msg.angular_acceleration.x, msg.angular_acceleration.y, msg.angular_acceleration.z);
+
+}
+
+inline void eigenDroneFromStateToMsg(
+    const EigenDroneState* trajectory_drone_state_point,
+    mav_msgs::DroneState& msg) {
+  assert(trajectory_drone_state_point != NULL);
+
+  if (trajectory_drone_state_point->position_W[2] < 0) {
+    ROS_ERROR("DroneState message is empty.");
+    return;
+  }
+
+  msg.position.x = trajectory_drone_state_point->position_W[0];
+  msg.position.y = trajectory_drone_state_point->position_W[1];
+  msg.position.z = trajectory_drone_state_point->position_W[2];
+
+  msg.linear_velocity.x = trajectory_drone_state_point->velocity[0];
+  msg.linear_velocity.y = trajectory_drone_state_point->velocity[1];
+  msg.linear_velocity.z = trajectory_drone_state_point->velocity[2];
+
+  msg.orientation.x = trajectory_drone_state_point->orientation_W_B.x();
+  msg.orientation.y = trajectory_drone_state_point->orientation_W_B.y();
+  msg.orientation.z = trajectory_drone_state_point->orientation_W_B.z();
+  msg.orientation.w = trajectory_drone_state_point->orientation_W_B.w();
+
+  msg.linear_acceleration.x = trajectory_drone_state_point->acceleration[0];
+  msg.linear_acceleration.y = trajectory_drone_state_point->acceleration[1];
+  msg.linear_acceleration.z = trajectory_drone_state_point->acceleration[2];
+
+  msg.angular_velocity.x = trajectory_drone_state_point->angular_velocity_B[0];
+  msg.angular_velocity.y = trajectory_drone_state_point->angular_velocity_B[1];
+  msg.angular_velocity.z = trajectory_drone_state_point->angular_velocity_B[2];
+
+  msg.angular_acceleration.x = trajectory_drone_state_point->angular_acceleration_B[0];
+  msg.angular_acceleration.y = trajectory_drone_state_point->angular_acceleration_B[1];
+  msg.angular_acceleration.z = trajectory_drone_state_point->angular_acceleration_B[2];
+
+}
+
 
 inline void eigenTrajectoryPointVectorFromMsg(
     const trajectory_msgs::MultiDOFJointTrajectory& msg,

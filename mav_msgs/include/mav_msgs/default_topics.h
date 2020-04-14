@@ -4,6 +4,8 @@
  * Copyright 2015 Markus Achtelik, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Helen Oleynikova, ASL, ETH Zurich, Switzerland
  * Copyright 2015 Mina Kamel, ASL, ETH Zurich, Switzerland
+ * Copyright 2020 Ria Sonecha, MIT, USA
+ * Copyright 2020 Giuseppe Silano, University of Sannio in Benevento, Italy
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +37,7 @@ static constexpr char STATUS[] = "status";
 static constexpr char FILTERED_SENSOR_DATA[] = "filtered_sensor_data";
 static constexpr char AIR_SPEED[] = "air_speed";
 static constexpr char GROUND_SPEED[] = "ground_speed";
+static constexpr char DRONE_STATE[] = "drone_state";
 
 static constexpr char COMMAND_ACTUATORS[] = "command/motor_speed";
 static constexpr char COMMAND_RATE_THRUST[] = "command/rate_thrust";

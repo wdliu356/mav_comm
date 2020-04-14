@@ -169,16 +169,16 @@ inline bool isRotationMatrix(const Eigen::Matrix3d& mat){
   if ((mat.transpose() * mat - Eigen::Matrix3d::Identity()).norm() > kSmallValueCheck){
     std::cerr << "[mav_msgs::common] Rotation matrix requirement violated (R^T * R = I)" << std::endl;
     return false;
-  }  
+  }
   // Check that det(R) = 1
   if (mat.determinant() - 1.0 > kSmallValueCheck){
     std::cerr << "[mav_msgs::common] Rotation matrix requirement violated (det(R) = 1)" << std::endl;
     return false;
-  }  
+  }
   return true;
 }
 
-// Rotation matrix from rotation vector as described in 
+// Rotation matrix from rotation vector as described in
 // "Computationally Efficient Trajectory Generation for Fully Actuated Multirotor Vehicles"
 // Brescianini 2018
 inline void matrixFromRotationVector(const Eigen::Vector3d& vec,
@@ -196,7 +196,7 @@ inline void matrixFromRotationVector(const Eigen::Vector3d& vec,
          vec_skew_norm * vec_skew_norm * (1 - std::cos(r_norm));
 }
 
-// Rotation vector from rotation matrix as described in 
+// Rotation vector from rotation matrix as described in
 // "Computationally Efficient Trajectory Generation for Fully Actuated Multirotor Vehicles"
 // Brescianini 2018
 inline bool vectorFromRotationMatrix(const Eigen::Matrix3d& mat,
@@ -205,22 +205,22 @@ inline bool vectorFromRotationMatrix(const Eigen::Matrix3d& mat,
   // where [r] is the skew matrix of r vector
   // and phi satisfies 1 + 2cos(phi) = trace(R)
   assert(vec);
-  
+
   if (!isRotationMatrix(mat)){
     std::cerr << "[mav_msgs::common] Not a rotation matrix." << std::endl;
     return false;
   }
-  
+
   if ((mat - Eigen::Matrix3d::Identity()).norm() < kSmallValueCheck){
     *vec = Eigen::Vector3d::Zero();
     return true;
   }
-  
+
   // Compute cosine of angle and clamp in range [-1, 1]
   double cos_phi = (mat.trace() - 1.0) / 2.0;
   double cos_phi_clamped = boost::algorithm::clamp(cos_phi, -1.0, 1.0);
   double phi = std::acos(cos_phi_clamped);
-  
+
   if (phi < kSmallValueCheck){
     *vec = Eigen::Vector3d::Zero();
   } else{
@@ -231,7 +231,7 @@ inline bool vectorFromRotationMatrix(const Eigen::Matrix3d& mat,
     }else{
       return false;
     }
-    
+
   }
   return true;
 }
@@ -240,7 +240,7 @@ inline bool vectorFromRotationMatrix(const Eigen::Matrix3d& mat,
 // based on formula derived in "Finite rotations and angular velocity" by Asher
 // Peres
 inline Eigen::Vector3d omegaFromRotationVector(
-    const Eigen::Vector3d& rot_vec, const Eigen::Vector3d& rot_vec_vel) 
+    const Eigen::Vector3d& rot_vec, const Eigen::Vector3d& rot_vec_vel)
 {
   double phi = rot_vec.norm();
   if (std::abs(phi) < 1.0e-3) {
@@ -268,7 +268,7 @@ inline Eigen::Vector3d omegaFromRotationVector(
 // Peres
 inline Eigen::Vector3d omegaDotFromRotationVector(
     const Eigen::Vector3d& rot_vec, const Eigen::Vector3d& rot_vec_vel,
-    const Eigen::Vector3d& rot_vec_acc) 
+    const Eigen::Vector3d& rot_vec_acc)
 {
   double phi = rot_vec.norm();
   if (std::abs(phi) < 1.0e-3) {
