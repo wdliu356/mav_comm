@@ -29,6 +29,8 @@ add_message_files(
   FilteredSensorData.msg
   GpsWaypoint.msg
   DroneState.msg
+  DroneCommand.msg
+  WrenchStamped.msg
 )
 
 generate_messages(DEPENDENCIES std_msgs geometry_msgs)
